@@ -11,31 +11,31 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.spotifyide.Screen
 import com.example.spotifyide.ui.theme.SpotifyIDETheme
-import com.example.spotifyide.viewmodels.MainScreenViewModel
+import com.example.spotifyide.viewmodels.OtherScreenViewModel
 import com.example.spotifyide.viewmodels.SharedViewModel
 
 @Composable
-fun MainScreen(
+fun OtherScreen(
     navController: NavController? = null,
-    sharedViewModel:SharedViewModel? = null,
-    mainScreenViewModel: MainScreenViewModel = hiltViewModel()
+    sharedViewModel: SharedViewModel? = null,
+    otherScreenViewModel: OtherScreenViewModel = hiltViewModel()
 ) {
     Column {
-        Text(text = "${mainScreenViewModel.title} ${sharedViewModel?.number?:0}")
+
+        Text(text = "${otherScreenViewModel.title} ${sharedViewModel?.number?:0}")
         Column(modifier = Modifier.fillMaxSize()) {
             Button(
                 modifier = Modifier.padding(8.dp),
                 onClick = {
                     sharedViewModel?.incrementNumber()
-                    navController?.navigate(Screen.OtherScreen.route)
-            }) {
+                    navController?.navigate(Screen.MainScreen.route) }) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
                         .padding(8.dp)
                 ) {
-                    Text(text = "other screen")
+                    Text(text = "main screen")
                 }
             }
         }
@@ -44,8 +44,8 @@ fun MainScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun DefaultOtherScreenPreview() {
     SpotifyIDETheme {
-        MainScreen()
+        OtherScreen()
     }
 }
