@@ -6,13 +6,17 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.spotifyide.ui.screens.MainScreen
 import com.example.spotifyide.ui.screens.OtherScreen
+import com.example.spotifyide.ui.screens.User
 import com.example.spotifyide.ui.theme.SpotifyIDETheme
 import com.example.spotifyide.viewmodels.SharedViewModel
+import com.squareup.moshi.Moshi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,10 +38,19 @@ fun NavigationSystem(){
         navController = navController,
         startDestination = "mainScreen"
     ) {
-        composable("mainScreen", arguments = listOf())
-        { MainScreen(navController, sharedViewModel) }
-        composable("otherScreen")
-        { OtherScreen(navController, sharedViewModel) }
+        composable("mainScreen")
+        {
+            MainScreen(navController, sharedViewModel) }
+        composable("otherScreen/{user}")
+        { backStackEntry->
+            val userJson =  backStackEntry.arguments?.getString("user")
+            val moshi = Moshi.Builder().build()
+            val jsonAdapter = moshi.adapter(User::class.java).lenient()
+            val userObject = jsonAdapter.fromJson(userJson)
+
+            //val index = it.arguments?.getString("index")?:"0"
+            OtherScreen(navController, sharedViewModel, index = userObject?.name?:"A generic result")
+        }
     }
 }
 

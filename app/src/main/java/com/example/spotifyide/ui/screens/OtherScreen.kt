@@ -18,17 +18,18 @@ import com.example.spotifyide.viewmodels.SharedViewModel
 fun OtherScreen(
     navController: NavController? = null,
     sharedViewModel: SharedViewModel? = null,
+    index:String = "",
     otherScreenViewModel: OtherScreenViewModel = hiltViewModel()
 ) {
     Column {
 
-        Text(text = "${otherScreenViewModel.title} ${sharedViewModel?.number?:0}")
+        Text(text = "${otherScreenViewModel.title} $index")
         Column(modifier = Modifier.fillMaxSize()) {
             Button(
                 modifier = Modifier.padding(8.dp),
                 onClick = {
                     sharedViewModel?.incrementNumber()
-                    navController?.navigate(Screen.MainScreen.route) }) {
+                    navController?.popBackStack() }) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
