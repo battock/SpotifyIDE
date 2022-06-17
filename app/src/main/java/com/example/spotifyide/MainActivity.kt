@@ -40,8 +40,9 @@ fun NavigationSystem(){
     ) {
         composable("mainScreen")
         {
-            MainScreen(navController, sharedViewModel) }
+        MainScreen(navController, sharedViewModel) }
         composable("otherScreen/{user}")
+
         { backStackEntry->
             val userJson =  backStackEntry.arguments?.getString("user")
             val moshi = Moshi.Builder().build()

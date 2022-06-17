@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import com.squareup.moshi.JsonClass
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,15 +20,17 @@ import com.example.spotifyide.viewmodels.MainScreenViewModel
 import com.example.spotifyide.viewmodels.SharedViewModel
 import com.squareup.moshi.Moshi
 
+const val MAIN_HEADER_DESCRIPTION = "MAIN HEADER"
+
 @Composable
 fun MainScreen(
     navController: NavController? = null,
     sharedViewModel:SharedViewModel? = null,
-    index:Int = 0,
     mainScreenViewModel: MainScreenViewModel = hiltViewModel()
-) {
-
+)
+{
     Column {
+        Text("MAIN HEADER", modifier = Modifier.semantics { MAIN_HEADER_DESCRIPTION})
         val listOfStuff = listOf(
             User(id = 0, name = "user 0"),
             User(id = 1, name = "user 1"),
@@ -62,7 +65,7 @@ fun MainScreen(
                 onClick = {
                     sharedViewModel?.incrementNumber()
                     navController?.navigate(Screen.OtherScreen.route)
-            }) {
+                }) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

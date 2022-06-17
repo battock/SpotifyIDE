@@ -43,11 +43,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
+
     packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-            excludes += 'META-INF/*'
-        }
+        resources.excludes.add("META-INF/*")
     }
     configurations {
         androidTestImplementation {
@@ -87,9 +85,9 @@ dependencies {
     implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'
 
     //Mocking framework
-    androidTestImplementation 'io.mockk:mockk-android:1.12.3'
-    androidTestImplementation 'io.mockk:mockk:1.12.3'
-    testImplementation 'io.mockk:mockk:1.12.3'
+    androidTestImplementation "io.mockk:mockk-android:$mockkVersion"
+    testImplementation "io.mockk:mockk:$mockkVersion"
+    androidTestImplementation "io.mockk:mockk:$mockkVersion"
 
     //Testing
     androidTestImplementation 'io.kotlintest:kotlintest-runner-junit5:3.4.2'
