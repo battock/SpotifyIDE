@@ -21,17 +21,17 @@ class MainScreenKtTest(){
     @MockK
     private lateinit var viewModel: SharedViewModel
 
-//    @RelaxedMockK
-//    private lateinit var mainViewModel: MainScreenViewModel
-//
-//    @RelaxedMockK
-//    private lateinit var navController: NavController
+    @RelaxedMockK
+    private lateinit var mainViewModel: MainScreenViewModel
+
+    @RelaxedMockK
+    private lateinit var navController: NavController
 
     @Before  fun setUp() {
         MockKAnnotations.init(this)
         composeTestRule.setContent {
             SpotifyIDETheme{
-                MainScreen(null,viewModel)
+                MainScreen(navController,viewModel,mainViewModel)
             }
         }
     }
