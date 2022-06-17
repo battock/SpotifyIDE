@@ -7,6 +7,7 @@ import com.example.spotifyide.ui.theme.SpotifyIDETheme
 import com.example.spotifyide.viewmodels.MainScreenViewModel
 import com.example.spotifyide.viewmodels.SharedViewModel
 import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import org.junit.Before
@@ -18,7 +19,7 @@ class MainScreenKtTest(){
     @get:Rule()
     val composeTestRule = createComposeRule()
 
-    @MockK
+    @RelaxedMockK
     private lateinit var viewModel: SharedViewModel
 
     @RelaxedMockK
@@ -29,6 +30,8 @@ class MainScreenKtTest(){
 
     @Before  fun setUp() {
         MockKAnnotations.init(this)
+
+        every { viewModel.number } returns 0
         composeTestRule.setContent {
             SpotifyIDETheme{
                 MainScreen(navController,viewModel,mainViewModel)
