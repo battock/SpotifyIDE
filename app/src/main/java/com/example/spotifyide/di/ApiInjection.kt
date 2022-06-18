@@ -1,6 +1,6 @@
 package com.example.gumtreetechtest.di
 
-import com.example.gumtreetechtest.api.ApiService
+import com.example.spotifyide.data.api.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
-const val BASE_URL = ""
+private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
 @Module
 @InstallIn(SingletonComponent::class)
