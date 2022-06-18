@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.squareup.moshi.JsonClass
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.spotifyide.Screen
+import com.example.spotifyide.data.data.Album
 import com.example.spotifyide.ui.theme.SpotifyIDETheme
 import com.example.spotifyide.viewmodels.MainScreenViewModel
 import com.example.spotifyide.viewmodels.SharedViewModel
@@ -29,19 +31,16 @@ fun MainScreen(
     mainScreenViewModel: MainScreenViewModel = hiltViewModel()
 )
 {
+    val albums = mainScreenViewModel.albums.observeAsState()
     Column {
         Text("MAIN HEADER", modifier = Modifier.semantics { MAIN_HEADER_DESCRIPTION})
-        val listOfStuff = listOf(
-            User(id = 0, name = "user 0"),
-            User(id = 1, name = "user 1"),
-            User(id = 2, name = "user 2")
-        )
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
-            items(listOfStuff) { listItem ->
+            items(albums.value as List<Album>) { listItem ->
                 val moshi = Moshi.Builder().build()
-                val jsonAdapter = moshi.adapter(User::class.java).lenient()
+                val jsonAdapter = moshi.adapter(Album::class.java).lenient()
                 val userJson = jsonAdapter.toJson(listItem)
 
                 Box(
@@ -54,7 +53,7 @@ fun MainScreen(
                             navController?.navigate("${Screen.OtherScreen.route}/${userJson}")
                         }
                 ) {
-                    Text(text = listItem.name)
+                    Text(text = listItem.title?:"")
                 }
             }
         }

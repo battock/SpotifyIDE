@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.spotifyide.data.data.Album
 import com.example.spotifyide.ui.screens.MainScreen
 import com.example.spotifyide.ui.screens.OtherScreen
 import com.example.spotifyide.ui.screens.User
@@ -41,16 +42,16 @@ fun NavigationSystem(){
         composable("mainScreen")
         {
         MainScreen(navController, sharedViewModel) }
-        composable("otherScreen/{user}")
+        composable("otherScreen/{album}")
 
         { backStackEntry->
-            val userJson =  backStackEntry.arguments?.getString("user")
+            val userJson =  backStackEntry.arguments?.getString("album")
             val moshi = Moshi.Builder().build()
-            val jsonAdapter = moshi.adapter(User::class.java).lenient()
-            val userObject = jsonAdapter.fromJson(userJson)
+            val jsonAdapter = moshi.adapter(Album::class.java).lenient()
+            val albumObject = jsonAdapter.fromJson(userJson)
 
             //val index = it.arguments?.getString("index")?:"0"
-            OtherScreen(navController, sharedViewModel, index = userObject?.name?:"A generic result")
+            OtherScreen(navController, sharedViewModel, index = albumObject?.title?:"A generic result")
         }
     }
 }
