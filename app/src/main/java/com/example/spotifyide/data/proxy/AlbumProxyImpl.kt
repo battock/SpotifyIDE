@@ -8,18 +8,10 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class AlbumProxyImpl @Inject constructor(
-    private val api: ApiService,
-    private val albumDao : AlbumDao
+    private val api: ApiService
 ) : AlbumProxy {
-    override suspend fun fetchAlbums():List<Album> {
-        return try {
-            if (albumDao.getAllAlbums().isNullOrEmpty()) {
-                albumDao.addAllAlbums(api.getAlbums())
-            }
-            albumDao.getAllAlbums()
-        }
-        catch(ex:Exception){
-            emptyList()
-        }
+    override suspend fun fetchAlbums(): List<Album> {
+        //todo convert from network object to lcoal UI object
+        return api.getAlbums()
     }
 }

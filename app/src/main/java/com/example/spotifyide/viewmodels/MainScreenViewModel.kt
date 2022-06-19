@@ -11,6 +11,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.spotifyide.data.data.Album
 import com.example.spotifyide.data.repository.AlbumRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
@@ -33,13 +35,14 @@ class MainScreenViewModel @Inject constructor(
 
     private fun fetchAlbums(){
         viewModelScope.launch {
-            try{
-                val result = repository.fetchAlbums()
-                _albums.postValue(result)
-            }
-            catch(ex:Exception){
-                Log.d(LOGGING_TAG, ex.message.toString())
-            }
+                repository.refreshDataBase()
+                    .catch {
+                        Log.d(LOGGING_TAG, it.message.toString())
+                    }
+                    .collect{
+                        result->_albums.postValue(result)
+                        Log.d(LOGGING_TAG, "data collected $result")
+                }
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.spotifyide.di
 
+import com.example.spotifyide.data.api.dataFlow.AlbumsFlowSource
+import com.example.spotifyide.data.api.dataFlow.AlbumsFlowSourceImpl
 import com.example.spotifyide.data.repository.AlbumProxy
 import com.example.spotifyide.data.proxy.AlbumProxyImpl
 import com.example.spotifyide.data.repository.AlbumRepository
@@ -22,4 +24,7 @@ interface HiltBindings  {
     @Singleton
     fun provideRepo(albumRepository: AlbumRepositoryImpl) :AlbumRepository
 
+    @Binds
+    @Singleton
+    fun provideFlowSource(albumFlow: AlbumsFlowSourceImpl) :AlbumsFlowSource
 }
